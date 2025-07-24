@@ -7,14 +7,13 @@ name = "rag_evals"
 version = "2.0.0"
 description = "A comprehensive, framework-agnostic library for evaluating Retrieval-Augmented Generation (RAG) pipelines."
 readme = "README.md"
-license = {text = "MIT"}
+license = "MIT"
 authors = [{name = "Abhinandan Mukherjee", email = "abhinandan.m.0401@gmail.com"}]
 maintainers = [
     {name = "Abhinandan Mukherjee", email = "abhinandan.m.0401@gmail.com"}
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Software Development :: Libraries :: Python Modules",

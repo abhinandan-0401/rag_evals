@@ -8,7 +8,7 @@ include pyproject.toml
 # Include environment template
 include env.template
 
-# Include all YAML prompt files
+# Include all YAML prompt files (fixed path)
 recursive-include src/rag_evals/prompts *.yaml
 
 # Include demo script
