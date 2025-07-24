@@ -1,8 +1,8 @@
-# 🎯 RAG Evals 2.0
+# 🎯 Monitoring-RAG
 
 **Comprehensive RAG Evaluation with LangChain Integration**
 
-[![PyPI version](https://badge.fury.io/py/rag_evals.svg)](https://badge.fury.io/py/rag_evals)
+[![PyPI version](https://badge.fury.io/py/rag_evals.svg)](https://pypi.org/project/monitoring-rag/0.0.1/)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -20,6 +20,7 @@ A streamlined Python library for evaluating Retrieval-Augmented Generation (RAG)
 ## 📋 Quick Reference
 
 ```python
+# Import the main evaluator
 from rag_evals import RAGEvaluator
 
 # Initialize
@@ -47,11 +48,13 @@ retrieval_metrics = ["context_recall", "context_relevance", "context_precision"]
 composite_metrics = ["llm_judge", "rag_certainty", "trust_score"]
 ```
 
-## 📦 Installation
+## 🚀 Installation
 
 ```bash
-pip install rag_evals
+pip install monitoring-rag
 ```
+
+> **Note**: Install as `monitoring-rag` but import as `rag_evals`
 
 ## 🔧 Quick Start
 

@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "rag_evals"
-version = "2.0.0"
+name = "monitoring-rag"
+version = "0.0.1"
 description = "A comprehensive, framework-agnostic library for evaluating Retrieval-Augmented Generation (RAG) pipelines."
 readme = "README.md"
 license = "MIT"

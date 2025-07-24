@@ -5,10 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.0] - 2025-01-24
+## [0.0.1] - 2025-01-24
 
 ### Added
-- Complete rewrite with LangChain integration
+- Complete RAG evaluation library with LangChain integration
 - Unified `RAGEvaluator` interface for all metrics
 - 12 comprehensive evaluation metrics:
   - **Generation**: faithfulness, answer_relevance, answer_correctness, completeness, coherence, helpfulness
@@ -20,8 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Performance monitoring and analytics
 - Dependency management system
 - Modular YAML-based prompt system
-- Enterprise-grade logging
-- Comprehensive demo script with HuggingFace integration
+- Professional documentation and packaging
+- Modern `src/` layout with comprehensive test suite
 
 ### Changed
 - **Breaking**: Complete API redesign for simplicity
