@@ -1,0 +1,46 @@
+# Answer Relevancy Metric Prompts
+# Evaluating how well answers address the given questions
+
+answer_relevancy:
+  _type: prompt
+  template:
+    template: |
+      You are an expert evaluator. Evaluate how relevant the given answer is to the user's question.
+
+      Question: {query}
+      Answer: {answer}
+
+      Rate relevance on a scale of 0.0 to 1.0 where:
+      - 1.0: Answer directly and completely addresses the question
+      - 0.5: Answer partially addresses the question or has some relevant information
+      - 0.0: Answer does not address the question at all
+
+      Score: [Your score from 0.0 to 1.0]
+      Reasoning: [Explain your reasoning]
+    input_variables: ["query", "answer"]
+
+  system_prompt:
+    template: |
+      You are an expert evaluator specialized in assessing answer relevance. Your task is to determine how well an answer addresses the specific question asked. Consider:
+      1. Direct addressing of the question
+      2. Completeness of the response
+      3. Relevance of provided information
+      4. Presence of unnecessary or off-topic content
+    input_variables: []
+  
+  evaluation_prompt:
+    template: |
+      Evaluate the relevance of this answer to the given question:
+
+      Question: {query}
+      Answer: {answer}
+      Context (for reference): {context}
+
+      Consider:
+      - Does the answer directly address what was asked?
+      - Is the information provided relevant and useful?
+      - Are there missing aspects that should be addressed?
+      - Is there irrelevant information included?
+
+      Provide a relevance score from 0.0 to 1.0 and detailed reasoning.
+    input_variables: ["query", "answer", "context"] 

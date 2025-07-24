@@ -1,0 +1,61 @@
+# Answer Correctness Metric Prompts
+# Evaluating factual accuracy and logical consistency
+
+answer_correctness:
+  _type: prompt
+  accuracy_prompt:
+    template: |
+      Evaluate the factual accuracy of the given answer against the provided context:
+
+      Context: {context}
+      Answer: {answer}
+
+      Assess accuracy on a scale of 0.0 to 1.0 where:
+      - 1.0: All factual statements are accurate and supported
+      - 0.5: Most statements are accurate but some are questionable or unsupported
+      - 0.0: Many statements are inaccurate or contradicted by the context
+
+      Accuracy Score: [Your score from 0.0 to 1.0]
+      Analysis: [Identify specific accurate and inaccurate elements]
+    input_variables: ["context", "answer"]
+  
+  consistency_prompt:
+    template: |
+      Evaluate the internal consistency of the answer:
+
+      Answer: {answer}
+
+      Check for:
+      1. Contradictory statements within the answer
+      2. Consistent use of terminology
+      3. Logical consistency across different parts
+      4. Coherent argumentation
+
+      Consistency Score: [Your score from 0.0 to 1.0]
+      Issues Found: [List any consistency problems]
+    input_variables: ["answer"]
+  
+  logic_prompt:
+    template: |
+      Evaluate the logical reasoning in the answer:
+
+      Question: {query}
+      Answer: {answer}
+
+      Assess:
+      1. Soundness of logical connections
+      2. Validity of conclusions drawn
+      3. Appropriate use of evidence
+      4. Quality of reasoning chain
+
+      Logic Score: [Your score from 0.0 to 1.0]
+      Reasoning Assessment: [Evaluate the logical quality]
+    input_variables: ["query", "answer"]
+  
+  system_prompt:
+    template: |
+      You are an expert evaluator specialized in assessing answer correctness. Focus on three key dimensions:
+      1. Factual Accuracy: Are the facts stated correctly?
+      2. Internal Consistency: Is the answer logically consistent within itself?
+      3. Logical Reasoning: Are conclusions properly supported and reasoning sound?
+    input_variables: [] 

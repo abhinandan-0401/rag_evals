@@ -1,0 +1,59 @@
+*__pycache__*
+*/*__pycache__*
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+*.env
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Build and distribution
+build/
+dist/
+*.egg-info/
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# *tests/
+
+*.venv
+*.venv/*
+*.venv/.*
+*.venv/bin/*
+*.venv/bin/.*
+*.venv/bin/python
+*.venv/bin/python3
+*.venv/bin/python3.10
+*.venv/bin/python3.10/activate
+*.venv/bin/python3.10/activate.csh
+*.venv/bin/python3.10/activate.fish
+
+outputs
+outputs/*
+
+test_outputs
+test_outputs/*
+
+logs
+logs/*
+
+# PyInstaller
+# -

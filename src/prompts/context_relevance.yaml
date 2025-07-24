@@ -1,0 +1,84 @@
+# Context Relevance Metric Prompts
+# Evaluating relevance of retrieved contexts
+
+context_relevance:
+  _type: prompt
+  template:
+    template: |
+      You are an expert evaluator. Evaluate how relevant the retrieved contexts are to the given question.
+
+      Question: {query}
+      Retrieved Contexts: {contexts}
+
+      Rate context relevance on a scale of 0.0 to 1.0 where:
+      - 1.0: All contexts are highly relevant and directly related to the question
+      - 0.5: Some contexts are relevant while others are tangentially related or irrelevant
+      - 0.0: Most contexts are irrelevant or unrelated to the question
+
+      Score: [Your score from 0.0 to 1.0]
+      Reasoning: [Explain the relevance of the contexts to the question]
+    input_variables: ["query", "contexts"]
+  
+  detailed_analysis:
+    template: |
+      Perform a detailed relevance analysis of the retrieved contexts:
+
+      Question: {query}
+      Contexts: {contexts}
+
+      For each context, analyze:
+      1. Direct relevance to the question topic
+      2. Usefulness for answering the question
+      3. Quality of information provided
+      4. Specificity vs. generality
+
+      Context Analysis:
+      Context 1: [Relevance score 0.0-1.0] - [Detailed analysis]
+      Context 2: [Relevance score 0.0-1.0] - [Detailed analysis]
+      ...
+
+      Overall Relevance Score: [Average score 0.0-1.0]
+      Summary: [Overall assessment of context relevance]
+    input_variables: ["query", "contexts"]
+  
+  binary_relevance:
+    template: |
+      Make a binary relevance judgment for this context:
+
+      Question: {query}
+      Context: {context}
+
+      Is this context relevant to answering the question?
+      - RELEVANT: This context contains information that helps answer the question
+      - IRRELEVANT: This context does not contain useful information for the question
+
+      Decision: [RELEVANT/IRRELEVANT]
+      Explanation: [Brief explanation of your decision]
+      Relevant Information: [If relevant, highlight the key relevant parts]
+    input_variables: ["query", "context"]
+  
+  topical_alignment:
+    template: |
+      Evaluate the topical alignment between the question and contexts:
+
+      Question: {query}
+      Contexts: {contexts}
+
+      Assess:
+      1. Topic match: Do the contexts discuss the same topic as the question?
+      2. Scope alignment: Is the scope of information appropriate?
+      3. Domain relevance: Are the contexts from the right domain/field?
+      4. Temporal relevance: Is the information current/appropriate for the question?
+
+      Alignment Score: [0.0-1.0]
+      Alignment Analysis: [Detailed assessment of topical alignment]
+    input_variables: ["query", "contexts"]
+  
+  system_prompt:
+    template: |
+      You are an expert evaluator specialized in assessing context relevance for retrieval systems. Your task is to determine how well retrieved contexts match the information needs expressed in a question. Focus on:
+      1. Topical alignment between question and contexts
+      2. Information utility for answering the question
+      3. Relevance vs. tangential relationships
+      4. Quality and specificity of relevant information
+    input_variables: [] 

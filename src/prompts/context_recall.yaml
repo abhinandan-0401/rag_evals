@@ -1,0 +1,61 @@
+# Context Recall Metric Prompts
+# Evaluating retrieval coverage and completeness
+
+context_recall:
+  _type: prompt
+  template:
+    template: |
+      You are an expert evaluator. Evaluate how well the retrieved contexts cover the information needed to answer the question.
+
+      Question: {query}
+      Answer: {answer}
+      Retrieved Contexts: {contexts}
+
+      Rate context recall on a scale of 0.0 to 1.0 where:
+      - 1.0: All necessary information to answer the question is present in the contexts
+      - 0.5: Some necessary information is present but key elements are missing
+      - 0.0: Most necessary information is missing from the contexts
+
+      Score: [Your score from 0.0 to 1.0]
+      Reasoning: [Explain your reasoning]
+    input_variables: ["query", "answer", "contexts"]
+
+  extraction_prompt:
+    template: |
+      Extract key information elements that would be needed to properly answer this question:
+
+      Question: {query}
+      Ground Truth Answer: {ground_truth}
+
+      List the essential information elements:
+      1. [First key information element]
+      2. [Second key information element]
+      ...
+
+      Key Information Elements:
+    input_variables: ["query", "ground_truth"]
+  
+  verification_prompt:
+    template: |
+      Check if the following information element is present in the retrieved contexts:
+
+      Information Element: {element}
+      Retrieved Contexts: {contexts}
+
+      Is this information element sufficiently covered in the contexts?
+      - PRESENT: The information is clearly present and adequately detailed
+      - PARTIALLY_PRESENT: Some related information exists but lacks detail or clarity
+      - ABSENT: This information is not present in the contexts
+
+      Coverage: [PRESENT/PARTIALLY_PRESENT/ABSENT]
+      Evidence: [Quote or reference the relevant parts of the context]
+    input_variables: ["element", "contexts"]
+  
+  system_prompt:
+    template: |
+      You are an expert evaluator specialized in assessing context recall for RAG systems. Your task is to determine how well the retrieved contexts cover the information needed to answer a given question. Consider:
+      1. Completeness of information coverage
+      2. Presence of key facts and details
+      3. Availability of supporting evidence
+      4. Comprehensiveness relative to the ground truth
+    input_variables: [] 

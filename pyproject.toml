@@ -1,0 +1,145 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rag_evals"
+version = "2.0.0"
+description = "A comprehensive, framework-agnostic library for evaluating Retrieval-Augmented Generation (RAG) pipelines."
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Abhinandan Mukherjee", email = "abhinandan.m.0401@gmail.com"}]
+maintainers = [
+    {name = "Abhinandan Mukherjee", email = "abhinandan.m.0401@gmail.com"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+keywords = ["rag", "evaluation", "llm", "ai", "machine-learning", "nlp", "retrieval", "generation", "langchain", "azure", "openai"]
+requires-python = ">=3.8"
+dependencies = [
+    # Core LangChain dependencies
+    "langchain>=0.2.0",
+    "langchain-core>=0.2.0",
+    
+    # LLM providers - Azure OpenAI is primary focus
+    "langchain-openai>=0.1.7",
+    
+    # Data handling and configuration
+    "python-dotenv>=0.19.0",
+    "datasets>=2.0.0",
+    "pydantic>=2.0.0",
+    "pandas>=1.5.0",
+    "tqdm>=4.64.0",
+    
+    # Async support and utilities
+    "aiohttp>=3.8.0",
+    "asyncio-throttle>=1.0.0",
+    
+    # Optional dependencies for enhanced functionality
+    "PyYAML>=6.0",
+    "jinja2>=3.0.0",
+]
+
+[project.optional-dependencies]
+# Development dependencies
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "isort>=5.10.0",
+    "mypy>=1.0.0",
+    "pre-commit>=2.20.0",
+    "flake8>=5.0.0",
+    "sphinx>=5.0.0",
+    "sphinx-rtd-theme>=1.0.0",
+    "python-dotenv>=1.0.0",
+]
+
+# Documentation dependencies
+docs = [
+    "sphinx>=5.0.0",
+    "sphinx-rtd-theme>=1.0.0",
+    "myst-parser>=0.18.0",
+]
+
+# Testing dependencies
+test = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.0.0",
+    "python-dotenv>=1.0.0",
+    "respx>=0.20.0",  # For mocking HTTP requests in tests
+]
+
+# Azure-specific dependencies (for enterprise deployments)
+azure = [
+    "azure-identity>=1.12.0",
+    "azure-keyvault-secrets>=4.6.0",
+    "azure-storage-blob>=12.14.0",
+]
+
+# Additional LLM providers
+providers = [
+    "langchain-anthropic>=0.1.0",
+    "langchain-google-genai>=1.0.0",
+    "langchain-huggingface>=0.0.3",
+]
+
+# Complete installation with all features
+all = [
+    "rag_evals[dev,docs,test,azure,providers]"
+]
+
+[project.urls]
+Homepage = "https://github.com/ragevals/rag_evals"
+Documentation = "https://rag-evals.readthedocs.io"
+Repository = "https://github.com/ragevals/rag_evals"
+Issues = "https://github.com/ragevals/rag_evals/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"rag_evals.prompts" = ["*.yaml"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=rag_evals --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ["src/rag_evals"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+] 

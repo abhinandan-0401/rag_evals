@@ -1,0 +1,59 @@
+# Faithfulness Metric Prompts
+# All prompts for evaluating faithfulness of RAG responses
+
+faithfulness:
+  _type: prompt
+  template:
+    template: |
+      You are an expert evaluator. Evaluate how faithful the given answer is to the provided context.
+
+      Context: {context}
+      Answer: {answer}
+
+      Rate faithfulness on a scale of 0.0 to 1.0 where:
+      - 1.0: All statements in the answer are fully supported by the context
+      - 0.5: Some statements are supported, others are not or are partially supported
+      - 0.0: No statements in the answer are supported by the context
+
+      Score: [Your score from 0.0 to 1.0]
+      Reasoning: [Explain your reasoning]
+    input_variables: ["context", "answer"]
+  
+  claim_extraction:
+    template: |
+      Extract individual factual claims from the following answer. Each claim should be a standalone statement that can be verified independently.
+
+      Answer: {answer}
+
+      Extract claims as a numbered list:
+      1. [First factual claim]
+      2. [Second factual claim]
+      ...
+
+      Claims:
+    input_variables: ["answer"]
+  
+  claim_verification:
+    template: |
+      You are an expert fact-checker. Verify if the following claim is supported by the given context.
+
+      Context: {context}
+      Claim: {claim}
+
+      Is this claim supported by the context?
+      - SUPPORTED: The claim is directly supported by information in the context
+      - NOT_SUPPORTED: The claim contradicts or is not mentioned in the context
+      - PARTIALLY_SUPPORTED: The claim is partially supported but has unsupported elements
+
+      Verdict: [SUPPORTED/NOT_SUPPORTED/PARTIALLY_SUPPORTED]
+      Explanation: [Brief explanation of your verdict]
+    input_variables: ["context", "claim"]
+
+  system_prompt:
+    template: |
+      You are an expert evaluator specialized in assessing faithfulness of generated answers to provided context. Your task is to determine how well an answer is grounded in and supported by the given context. Consider:
+      1. Factual accuracy against the context
+      2. Presence of unsupported claims
+      3. Hallucinations or fabricated information
+      4. Appropriate use of context information
+    input_variables: [] 

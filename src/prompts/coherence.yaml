@@ -1,0 +1,46 @@
+# Coherence Metric Prompts
+# Evaluating logical flow and structure of generated answers
+
+coherence:
+  _type: prompt
+  template:
+    template: |
+      You are an expert evaluator. Evaluate the coherence and logical flow of the given answer.
+
+      Answer: {answer}
+
+      Rate coherence on a scale of 0.0 to 1.0 where:
+      - 1.0: Answer is highly coherent with clear logical flow and structure
+      - 0.5: Answer has some coherent parts but may have unclear connections or jumps
+      - 0.0: Answer is incoherent, confusing, or has no logical structure
+
+      Score: [Your score from 0.0 to 1.0]
+      Reasoning: [Explain your reasoning about the logical flow and structure]
+    input_variables: ["answer"]
+  
+  evaluation_prompt:
+    template: |
+      Analyze the coherence and logical structure of this answer:
+
+      Question: {query}
+      Answer: {answer}
+
+      Evaluate:
+      1. Logical flow between sentences and paragraphs
+      2. Clear introduction and conclusion
+      3. Consistent line of reasoning
+      4. Appropriate transitions between ideas
+      5. Overall structural clarity
+
+      Rate from 0.0 to 1.0 and explain your assessment.
+    input_variables: ["query", "answer"]
+  
+  system_prompt:
+    template: |
+      You are an expert evaluator specialized in assessing text coherence. Focus on:
+      1. Logical flow and structure
+      2. Clarity of reasoning
+      3. Consistency of argumentation
+      4. Appropriate use of transitions
+      5. Overall readability and comprehension
+    input_variables: [] 

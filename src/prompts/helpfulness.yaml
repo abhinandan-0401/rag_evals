@@ -1,0 +1,55 @@
+# Helpfulness Metric Prompts
+# Evaluating practical utility and user value
+
+helpfulness:
+  _type: prompt
+  template:
+    template: |
+      You are an expert evaluator. Evaluate how helpful the given answer is to someone who asked the question.
+
+      Question: {query}
+      Answer: {answer}
+
+      Rate helpfulness on a scale of 0.0 to 1.0 where:
+      - 1.0: Answer is extremely helpful, actionable, and fully addresses user needs
+      - 0.5: Answer provides some useful information but could be more helpful
+      - 0.0: Answer is not helpful or may mislead the user
+
+      Score: [Your score from 0.0 to 1.0]
+      Reasoning: [Explain what makes this answer helpful or unhelpful]
+    input_variables: ["query", "answer"]
+  
+  practical_utility:
+    template: |
+      Assess the practical utility of this answer:
+
+      Question: {query}
+      Answer: {answer}
+      Context: {context}
+
+      Evaluate:
+      1. Actionability: Can the user act on this information?
+      2. Clarity: Is the information presented clearly?
+      3. Usefulness: Does this help solve the user's problem?
+      4. Completeness: Is enough detail provided to be useful?
+
+      Utility Score: [Your score from 0.0 to 1.0]
+      Practical Assessment: [Explain the practical value]
+    input_variables: ["query", "answer", "context"]
+  
+  user_experience:
+    template: |
+      Evaluate the user experience quality of this answer:
+
+      Answer: {answer}
+
+      Consider:
+      1. Readability and clarity
+      2. Appropriate level of detail
+      3. Organization and structure
+      4. Tone and accessibility
+      5. Overall user satisfaction potential
+
+      UX Score: [Your score from 0.0 to 1.0]
+      UX Analysis: [Assess user experience factors]
+    input_variables: ["answer"] 

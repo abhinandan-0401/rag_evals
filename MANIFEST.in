@@ -1,0 +1,37 @@
+# Include package metadata
+include README.md
+include LICENSE
+include CHANGELOG.md
+include CONTRIBUTING.md
+include pyproject.toml
+
+# Include environment template
+include env.template
+
+# Include all YAML prompt files
+recursive-include src/rag_evals/prompts *.yaml
+
+# Include demo script
+include demo_rag_evaluation.py
+
+# Exclude test files from distribution
+recursive-exclude tests *
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+
+# Exclude development files
+exclude .gitignore
+exclude .env*
+exclude pytest.ini
+exclude .coverage
+exclude tox.ini
+
+# Exclude build artifacts
+recursive-exclude build *
+recursive-exclude dist *
+recursive-exclude *.egg-info *
+
+# Exclude logs and outputs
+recursive-exclude logs *
+recursive-exclude outputs *
+recursive-exclude test_outputs * 

@@ -1,0 +1,92 @@
+# RAG Certainty Metric Prompts
+# Evaluating confidence and uncertainty in responses
+
+rag_certainty:
+  _type: prompt
+  template:
+    template: |
+      You are an expert evaluator. Assess the certainty and confidence of the RAG system's response.
+
+      Question: {query}
+      Answer: {answer}
+      Retrieved Contexts: {contexts}
+
+      Evaluate the certainty of this response by considering:
+      1. Confidence indicators in the language used
+      2. Quality and reliability of supporting evidence
+      3. Consistency between answer and retrieved contexts
+      4. Presence of uncertainty markers or hedging
+
+      Rate certainty on a scale of 0.0 to 1.0 where:
+      - 1.0: Very certain - strong evidence, confident language, well-supported claims
+      - 0.5: Moderately certain - some evidence, balanced language, partially supported
+      - 0.0: Uncertain - weak evidence, hedging language, unsupported claims
+
+      Certainty Score: [Your score from 0.0 to 1.0]
+      Reasoning: [Explain your assessment of certainty level]
+    input_variables: ["query", "answer", "contexts"]
+  
+  confidence_analysis:
+    template: |
+      Analyze the confidence level expressed in this answer:
+
+      Answer: {answer}
+
+      Look for:
+      1. Confidence markers (definitely, certainly, clearly, etc.)
+      2. Uncertainty markers (might, could, possibly, perhaps, etc.)
+      3. Hedging language (somewhat, relatively, generally, etc.)
+      4. Qualifying statements (however, but, although, etc.)
+
+      Confidence Indicators Found:
+      - High confidence markers: [List examples]
+      - Uncertainty markers: [List examples]
+      - Hedging language: [List examples]
+      - Qualifications: [List examples]
+
+      Overall Confidence Level: [HIGH/MODERATE/LOW]
+      Linguistic Analysis: [Detailed analysis of confidence language]
+    input_variables: ["answer"]
+  
+  evidence_reliability:
+    template: |
+      Assess the reliability of evidence supporting the answer:
+
+      Answer: {answer}
+      Retrieved Contexts: {contexts}
+
+      Evaluate:
+      1. Source quality: Are the contexts from reliable sources?
+      2. Evidence strength: How strong is the supporting evidence?
+      3. Coverage: How well do the contexts support the claims made?
+      4. Consistency: Are there any contradictions in the evidence?
+
+      Evidence Reliability Score: [0.0-1.0]
+      Source Assessment: [Evaluate context source quality]
+      Support Strength: [Assess how well evidence supports claims]
+      Coverage Analysis: [Evaluate evidence coverage of claims]
+      Consistency Check: [Note any contradictions or inconsistencies]
+    input_variables: ["answer", "contexts"]
+  
+  uncertainty_detection:
+    template: |
+      Identify and categorize uncertainties in the response:
+
+      Question: {query}
+      Answer: {answer}
+      Contexts: {contexts}
+
+      Types of uncertainty to identify:
+      1. Epistemic uncertainty (knowledge gaps)
+      2. Aleatoric uncertainty (inherent variability)
+      3. Linguistic uncertainty (hedging, qualifiers)
+      4. Evidential uncertainty (weak or conflicting evidence)
+
+      Uncertainty Analysis:
+      - Epistemic uncertainties: [What knowledge gaps are acknowledged?]
+      - Linguistic uncertainties: [What hedging language is used?]
+      - Evidential uncertainties: [Where is evidence weak or conflicting?]
+
+      Overall Uncertainty Level: [HIGH/MODERATE/LOW]
+      Uncertainty Score: [0.0-1.0, where 1.0 = most uncertain]
+    input_variables: ["query", "answer", "contexts"] 

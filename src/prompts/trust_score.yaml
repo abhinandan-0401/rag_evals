@@ -1,0 +1,99 @@
+# Trust Score Metric Prompts
+# Comprehensive trust evaluation for RAG responses
+
+trust_score:
+  _type: prompt
+  template:
+    template: |
+      You are an expert evaluator. Please evaluate the overall trustworthiness of this RAG system response.
+
+      Question: {question}
+      Answer: {answer}
+      Context: {context}
+
+      Consider multiple factors including faithfulness, relevance, completeness, and coherence.
+      Rate the trust score on a scale of 0.0 to 1.0, where:
+      - 1.0: Highly trustworthy response with excellent quality across all dimensions
+      - 0.5: Moderately trustworthy with some concerns
+      - 0.0: Not trustworthy, significant quality issues
+
+      Score: [Your score from 0.0 to 1.0]
+      Reasoning: [Explain your reasoning]
+    input_variables: ["question", "answer", "context"]
+
+  credibility_assessment:
+    template: |
+      Assess the credibility of the answer and its sources:
+
+      Answer: {answer}
+      Retrieved Contexts: {contexts}
+
+      Evaluate:
+      1. Source authority: Are the contexts from authoritative sources?
+      2. Information recency: Is the information current and up-to-date?
+      3. Expert consensus: Does the answer align with expert knowledge?
+      4. Citation quality: Are claims properly attributed?
+
+      Credibility Score: [Your score from 0.0 to 1.0]
+      Credibility Analysis: [Detailed assessment]
+    input_variables: ["answer", "contexts"]
+  
+  transparency_evaluation:
+    template: |
+      Evaluate the transparency and honesty of the response:
+
+      Question: {query}
+      Answer: {answer}
+
+      Assess:
+      1. Limitation acknowledgment: Does the answer acknowledge its limitations?
+      2. Uncertainty communication: Are uncertainties clearly communicated?
+      3. Source transparency: Are sources and reasoning made clear?
+      4. Scope clarity: Is the scope of the answer clearly defined?
+
+      Transparency Score: [0.0-1.0]
+      Limitation Acknowledgment: [How well are limitations acknowledged?]
+      Uncertainty Communication: [How clearly are uncertainties expressed?]
+      Source Transparency: [How transparent is the sourcing and reasoning?]
+      Scope Definition: [How clearly is the answer scope defined?]
+    input_variables: ["query", "answer"]
+  
+  consistency_check:
+    template: |
+      Check for consistency across different aspects of the response:
+
+      Answer: {answer}
+      Retrieved Contexts: {contexts}
+
+      Evaluate consistency:
+      1. Internal consistency: Are different parts of the answer consistent?
+      2. Context consistency: Does the answer align with retrieved contexts?
+      3. Claim consistency: Are all claims mutually consistent?
+      4. Tone consistency: Is the confidence level appropriate throughout?
+
+      Consistency Score: [0.0-1.0]
+      Internal Consistency: [Check for internal contradictions]
+      Context Alignment: [Assess alignment with retrieved contexts]
+      Claim Consistency: [Evaluate consistency of factual claims]
+      Confidence Calibration: [Assess appropriateness of confidence level]
+    input_variables: ["answer", "contexts"]
+  
+  behavioral_assessment:
+    template: |
+      Assess behavioral trustworthiness indicators:
+
+      Question: {query}
+      Answer: {answer}
+
+      Evaluate:
+      1. Appropriate hedging: Does the answer hedge appropriately for uncertain claims?
+      2. Overconfidence avoidance: Does the answer avoid overconfident assertions?
+      3. Bias awareness: Does the answer acknowledge potential biases?
+      4. Responsibility: Does the answer take appropriate responsibility for its limitations?
+
+      Behavioral Trust Score: [0.0-1.0]
+      Hedging Appropriateness: [Assess quality of uncertainty communication]
+      Confidence Calibration: [Evaluate appropriateness of confidence levels]
+      Bias Acknowledgment: [Check for awareness of potential biases]
+      Responsibility Taking: [Assess acknowledgment of limitations and responsibility]
+    input_variables: ["query", "answer"] 

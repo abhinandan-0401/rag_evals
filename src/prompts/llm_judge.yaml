@@ -1,0 +1,122 @@
+# LLM Judge Metric Prompts
+# Comprehensive evaluation using LLM-as-a-judge methodology
+
+llm_judge:
+  _type: prompt
+  template:
+    template: |
+      You are an expert evaluator. Assess the quality of the given answer across multiple evaluation criteria.
+
+      Question: {query}
+      Answer: {answer}
+      Context: {context}
+
+      Evaluate the answer on the following criteria:
+      1. Accuracy: Is the information factually correct?
+      2. Relevance: Does the answer address the question?
+      3. Completeness: Are all aspects of the question covered?
+      4. Clarity: Is the answer clear and well-structured?
+      5. Coherence: Is the reasoning logical and consistent?
+
+      For each criterion, provide a score from 0.0 to 1.0 and brief reasoning.
+      Then provide an overall score based on the weighted average of all criteria.
+
+      Evaluation:
+      1. Accuracy: [Score] - [Reasoning]
+      2. Relevance: [Score] - [Reasoning]
+      3. Completeness: [Score] - [Reasoning]
+      4. Clarity: [Score] - [Reasoning]
+      5. Coherence: [Score] - [Reasoning]
+
+      Overall Score: [Weighted average score from 0.0 to 1.0]
+      Summary: [Overall assessment]
+    input_variables: ["query", "answer", "context"]
+  
+  chain_of_thought_prompt:
+    template: |
+      You are an expert evaluator. Conduct a thorough, step-by-step evaluation of the given answer.
+
+      Question: {query}
+      Answer: {answer}
+      Context: {context}
+      Evaluation Criteria: {criteria}
+
+      Follow this chain of thought evaluation process:
+
+      Step 1: Understanding the Question
+      - What is the question asking for?
+      - What type of answer would be ideal?
+      - Are there multiple aspects to consider?
+
+      Step 2: Context Analysis
+      - What information is available in the context?
+      - How well does the context support answering the question?
+      - Are there any gaps or limitations in the context?
+
+      Step 3: Answer Assessment
+      - Does the answer directly address the question?
+      - Is the information accurate based on the context?
+      - Are all relevant aspects covered?
+      - Is the reasoning clear and logical?
+
+      Step 4: Detailed Scoring
+      For each criterion in {criteria}, provide:
+      - Score: [0.0-1.0]
+      - Reasoning: [Detailed explanation]
+      - Evidence: [Specific examples from the answer]
+
+      Step 5: Overall Judgment
+      - Weighted Overall Score: [0.0-1.0]
+      - Summary: [Comprehensive assessment]
+      - Strengths: [Key positive aspects]
+      - Weaknesses: [Areas for improvement]
+    input_variables: ["query", "answer", "context", "criteria"]
+  
+  direct_prompt:
+    template: |
+      You are an expert evaluator. Provide a direct evaluation of the answer quality.
+
+      Question: {query}
+      Answer: {answer}
+      Evaluation Criteria: {criteria}
+
+      Rate each criterion on a scale of 0.0 to 1.0:
+      {formatted_criteria}
+
+      Overall Score: [Average of all criteria scores]
+      Key Strengths: [List main strengths]
+      Key Weaknesses: [List main weaknesses]
+    input_variables: ["query", "answer", "criteria", "formatted_criteria"]
+  
+  system_prompt:
+    template: |
+      You are an expert LLM judge specialized in evaluating answer quality across multiple dimensions. Your evaluations should be:
+      1. Objective and consistent
+      2. Based on clear evidence from the answer and context
+      3. Balanced, noting both strengths and weaknesses
+      4. Detailed enough to be actionable
+      5. Calibrated to the full 0.0-1.0 scale
+
+      Use the provided criteria as your evaluation framework, but also consider overall answer quality and user value.
+    input_variables: []
+  
+  criteria_evaluation:
+    template: |
+      Evaluate the answer specifically on this criterion:
+
+      Criterion: {criterion_name}
+      Definition: {criterion_description}
+      
+      Question: {query}
+      Answer: {answer}
+      Context: {context}
+
+      Assessment:
+      - How well does the answer perform on this specific criterion?
+      - What evidence supports your assessment?
+      - What could be improved?
+
+      Criterion Score: [0.0-1.0]
+      Evidence: [Specific examples from the answer]
+      Improvement Suggestions: [How the answer could better meet this criterion]
+    input_variables: ["criterion_name", "criterion_description", "query", "answer", "context"] 

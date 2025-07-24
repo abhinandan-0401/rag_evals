@@ -1,0 +1,68 @@
+# Context Precision Metric Prompts
+# Evaluating ranking quality and relevance of retrieved contexts
+
+context_precision:
+  _type: prompt
+  template:
+    template: |
+      You are an expert evaluator. Evaluate the precision and ranking quality of the retrieved contexts.
+
+      Question: {query}
+      Retrieved Contexts: {contexts}
+
+      Rate context precision on a scale of 0.0 to 1.0 where:
+      - 1.0: All contexts are highly relevant and well-ranked (most relevant first)
+      - 0.5: Some contexts are relevant but ranking could be improved
+      - 0.0: Many contexts are irrelevant or poorly ranked
+
+      Score: [Your score from 0.0 to 1.0]
+      Reasoning: [Explain your reasoning about relevance and ranking]
+    input_variables: ["query", "contexts"]
+
+  ranking_evaluation:
+    template: |
+      Evaluate the ranking quality of the retrieved contexts:
+
+      Question: {query}
+      Ranked Contexts: {ranked_contexts}
+
+      For each context, assess its relevance and ranking position:
+      1. Context 1: [HIGHLY_RELEVANT/MODERATELY_RELEVANT/SLIGHTLY_RELEVANT/IRRELEVANT] - [Brief explanation]
+      2. Context 2: [HIGHLY_RELEVANT/MODERATELY_RELEVANT/SLIGHTLY_RELEVANT/IRRELEVANT] - [Brief explanation]
+      ...
+
+      Ranking Quality Assessment:
+      - Are the most relevant contexts ranked highest?
+      - Are there any irrelevant contexts that should be filtered out?
+      - Is the ranking order appropriate?
+
+      Precision Score: [0.0-1.0]
+      Ranking Analysis: [Overall assessment of ranking quality]
+    input_variables: ["query", "ranked_contexts"]
+  
+  relevance_assessment:
+    template: |
+      Assess the relevance of this specific context to the given question:
+
+      Question: {query}
+      Context: {context}
+
+      Relevance Categories:
+      - HIGHLY_RELEVANT: Directly answers or provides key information for the question
+      - MODERATELY_RELEVANT: Contains useful information but may not be central
+      - SLIGHTLY_RELEVANT: Has some connection but limited usefulness
+      - IRRELEVANT: No meaningful connection to the question
+
+      Relevance: [HIGHLY_RELEVANT/MODERATELY_RELEVANT/SLIGHTLY_RELEVANT/IRRELEVANT]
+      Justification: [Explain why this context has this relevance level]
+      Key Information: [Highlight the most relevant parts if any]
+    input_variables: ["query", "context"]
+  
+  system_prompt:
+    template: |
+      You are an expert evaluator specialized in assessing context precision for retrieval systems. Your task is to evaluate how relevant and useful retrieved contexts are for answering a specific question. Consider:
+      1. Direct relevance to the question
+      2. Quality and usefulness of information
+      3. Absence of irrelevant or distracting content
+      4. Appropriate ranking and ordering
+    input_variables: [] 

@@ -1,0 +1,62 @@
+# Completeness Metric Prompts
+# Evaluating comprehensive coverage of question aspects
+
+completeness:
+  _type: prompt
+  simple_prompt:
+    template: |
+      You are an expert evaluator. Evaluate how completely the given answer addresses all aspects of the question.
+
+      Question: {query}
+      Answer: {answer}
+      Context: {context}
+
+      Rate completeness on a scale of 0.0 to 1.0 where:
+      - 1.0: Answer comprehensively addresses all aspects of the question
+      - 0.5: Answer addresses some aspects but misses important elements
+      - 0.0: Answer fails to address key aspects of the question
+
+      Score: [Your score from 0.0 to 1.0]
+      Reasoning: [Explain what aspects are covered and what might be missing]
+    input_variables: ["query", "answer", "context"]
+  
+  aspect_prompt:
+    template: |
+      Identify the key aspects that should be addressed for this question:
+
+      Question: {query}
+      Context: {context}
+
+      List the important aspects that a complete answer should cover:
+      1. [First key aspect]
+      2. [Second key aspect]
+      ...
+
+      Key Aspects:
+    input_variables: ["query", "context"]
+  
+  coverage_prompt:
+    template: |
+      Evaluate how well the answer covers each identified aspect:
+
+      Question: {query}
+      Answer: {answer}
+      Key Aspects: {aspects}
+
+      For each aspect, assess coverage:
+      1. [Aspect 1]: [FULLY_COVERED/PARTIALLY_COVERED/NOT_COVERED] - [Brief explanation]
+      2. [Aspect 2]: [FULLY_COVERED/PARTIALLY_COVERED/NOT_COVERED] - [Brief explanation]
+      ...
+
+      Overall Completeness Score (0.0-1.0): [Score]
+      Summary: [Overall assessment of completeness]
+    input_variables: ["query", "answer", "aspects"]
+  
+  system_prompt:
+    template: |
+      You are an expert evaluator specialized in assessing answer completeness. Your task is to determine whether all important aspects of a question have been adequately addressed. Consider:
+      1. Identification of all question components
+      2. Depth of coverage for each aspect
+      3. Balance across different parts of the question
+      4. Comprehensiveness within the available context
+    input_variables: [] 
